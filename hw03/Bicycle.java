@@ -46,8 +46,9 @@ public class Bicycle {
                     
                     //computes mintues out of seconds
                     minutes=Seconds/secondsPerMinute;
+        
                     
-                    System.out.print("The distance was "+(int)(distanceTrip*100)/100.00+" miles and took "+(minutes)+" minutes. ");
+                    System.out.print("The distance was "+(int)(distanceTrip*100)/100.00+" miles and took "+(int)(minutes*100)/100.00+" minutes. ");
                     
                     System.out.print("");
                     
