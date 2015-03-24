@@ -2,6 +2,7 @@
 // Run factorial between 9 and 16
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class RunFactorial   {
     public static void main(String[] args)  {

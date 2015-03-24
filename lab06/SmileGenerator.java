@@ -42,17 +42,21 @@ while (counter<5)   {
     }
     
      int randomVariable = 0;
-        
+        int v = 0;
         
         for (int i = 0; i < randomNumber; i++ ){
-            System.out.print(":)");
+            System.out.print("&");
+         
             
-            if (i == randomVariable){
+            if (v == randomVariable){
                 System.out.println();
+                v = 0;
                 randomVariable++;
             }
+            v += 1;
             
         }
+        
     
 }
     
