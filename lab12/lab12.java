@@ -1,116 +1,147 @@
-//
-//
+import java.util.Scanner;
 import java.util.Random;
+import java.util.Arrays;
 
 public class lab12 {
-    public static void main(String[] args) {
+ public static void main(String[] arg) {
+ Random rand = new Random();
+ int randomWidth = rand.nextInt(6)+1;
+ int randomHeight = rand.nextInt(6)+1;
+ int randomWidth2 = rand.nextInt(6)+1;
+ int randomHeight2 = rand.nextInt(6)+1;
+ 
+ int [][] rowArray = increasingMatrix(randomWidth, randomHeight, true);
+ printMatrix(rowArray, true);
+ int [][] columnArray = increasingMatrix(randomWidth, randomHeight, false);
+ printMatrix(columnArray, false);
+ int [][] cArray = increasingMatrix(randomWidth2, randomHeight2, true);
+ printMatrix(cArray, true);
+ 
+ addMatrix(rowArray,true,columnArray,false);
+ addMatrix(rowArray,true,cArray,true);
+ 
+ }
 
-        //random integers and boolean
-        Random rand = new Random();
-        int numRandom = rand.nextInt((5 - 1) + 1) + 1;
-        int numRandom2 = rand.nextInt((5 - 1) + 1) + 1;
-        int numRandom3 = rand.nextInt((5 - 1) + 1) + 1;
-        int numRandom4 = rand.nextInt((5 - 1) + 1) + 1;
-        boolean format = rand.nextBoolean();
-
-        int[][] array = increasingMatrix(numRandom, numRandom2, format);
-        int[][] array2 = increasingMatrix(numRandom, numRandom2, format);
-
-
-        System.out.println("Generating new matrix A with width of " + numRandom + " and length of " + numRandom2 + ".");
-
-        printMatrix(array, format);
-        System.out.println("");
-
-        System.out.println("Generating new matrix B with width of " + numRandom + " and length of " + numRandom2 + ".");
-        printMatrix(array2, format);
-
+ public static int[][] increasingMatrix(int width, int height, boolean format) {
+  int[][] array = new int [height][];
+  for (int i = 0; i < array.length; i++) {
+    array[i] = new int[width];
+   }
+  System.out.println("Generating a matrix with width "+width+" and height "+height+":");
+  if (format == true) {
+   //row major format;
+   
+   int number = 1;
+   for (int i = 0; i < array.length; i++) {
+    for (int j = 0; j < array[i].length; j++) {
+     array[i][j] = number;
+     number++;
     }
+   }
+  }
 
-    public static int[][] increasingMatrix(int width, int height, boolean format) {
-        //creates the new array as these parameters
+  else {
+   //column major format; !!!!!
 
-        int[][] array = new int[height][width];
+   for (int i = 0; i < array.length; i++){
+   for (int j = 0; j < array[0].length; j++) {
+  
+   array[i][j] = j*width+(i+1);
+  
+   }
+  }
+  }
+  
+  return array;
+ }
+ public static void printMatrix(int[][]array, boolean format) {
 
-        int number = 1;
+  
+  if(array == null) {
+   System.out.println("the array was empty!");
+  }
+  
+  else{
+  
+ if (format == false) {
+  int [][]newarray = translate(array);
+  for (int i = 0; i < newarray.length; i++){
+  System.out.print("[ ");
+  for (int j = 0; j < newarray[i].length; j++){
+   System.out.print(newarray[i][j]+" ");
+  }
+  System.out.println("]");
+  }
+ }
+  
 
-        if (format == true) {
-
-            for (int row = 0; row < array.length; row++) {
-
-                for (int column = 0; column < array[row].length; column++) {
-
-                    array[row][column] = number;
-                    number++;
-                }
-            }
-
-        }
-
-
-        //column-major
-        if (format == false) {
-
-            for (int column = 0; column < width; column++) {
-
-                for (int row = 0; row < array.length; row++) {
-
-                    array[row][column] = number;
-                    number = column + 1 + width;
-
-
-                }
-
-            }
-
-
-        }
-
-
-        return array;
+ 
+ else{
+   for (int i = 0; i < array.length; i++){
+  System.out.print("[ ");
+  for (int j = 0; j < array[i].length; j++){
+   System.out.print(array[i][j]+" ");
+  }
+  System.out.println("]");
+  }
+ }
+  }
+  
+  
+  
+  
+ }
+ public static int[][] translate(int[][]array) {
+  System.out.println("Translating column major to row major input.");
+  int [][] newArray = new int [array.length][array[0].length];
+  int number = 0;
+ for (int i = 0; i < array.length; i++) {
+  for(int j = 0; j < array[0].length; j++){
+   newArray [i][j] = array[j][i];
+  }
+ }
+ 
+ return newArray;
+ }
+ public static int[][] addMatrix(int[][]a, boolean formata, int[][]b, boolean formatb){
+ System.out.println("Adding two matrices.");
+ printMatrix(a,formata);
+ System.out.println("plus");
+ printMatrix(b,formatb);
+  int [][] addArray;
+  
+  if (formata != true) {
+   translate(a);
+  }
+  
+  if (formatb != true) {
+   translate(b);
+  }
+  
+  int widthA = a[0].length;
+  int widthB = b[0].length;
+  int heightA = a.length;
+  int heightB = b.length;
+  
+  if (widthA != widthB || heightA != heightB) {
+   System.out.println("the arrays cannot be added!");
+   return null;
+  }
+  
+  else {
+   addArray = new int [heightA][widthA];
+   for (int i = 0; i < addArray.length; i++) {
+    
+    for(int j = 0; j < addArray[0].length; j++) {
+     addArray[i][j] = a[i][j] + b[i][j];
     }
-
-
-
-    public static void printMatrix(int[][] array, boolean format) {
-        if (format == true) {
-
-
-            for (int i = 0; i < array.length; i++) {
-                System.out.print("[");
-                for (int j = 0; j < array[i].length; j++) {
-
-                    System.out.print(array[i][j]);
-                    System.out.print(" ");
-                }
-                System.out.print("]");
-                System.out.println("");
-            }
-
-
-        }
-
-        else if (format == false) {
-
-        }
-    }
-
-    // translate
-
-    public static void translate(int[][] array) {
-        //Reads input matrix and copies its values into a newly allocated array in row major format.
-        //output the new array.
-
-    }
-
-    //add Matrix
-    //accepts two arrays in row or column-major format
-    //assess if arrays can be added
-    //same width and height
-    //if they can't be added then prints "The arrays cannot be added" and returns null
-
-    public static void addMatrix(int[][] a, boolean formata, int[][] b, boolean formatb) {
-
-    }
-
+   }
+  }
+  
+  System.out.println("output:");
+  printMatrix(addArray, true);
+  return addArray;
+  
+ }
+ 
 }
